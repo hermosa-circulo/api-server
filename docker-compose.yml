@@ -2,18 +2,19 @@ version: '3'
 
 services:
     api:
-        image: hermosa/api
+        image: hermosa/iga-controller
         build: ./
         restart: always
         ports:
           - 80:9000
         environment:
-          - API_DATABASE_URL=db:3306/api
+          - API_DATABASE_URL=db:3306/iga
     db:
         image: mysql
         ports:
           - 3306:3306
+        restart: always
         environment:
           - MYSQL_ALLOW_EMPTY_PASSWORD=yes
-          - MYSQL_DATABASE=api
-          - MYSQL_ROOT_PASSWORD=api
+          - MYSQL_DATABASE=iga
+          - MYSQL_ROOT_PASSWORD=docker
