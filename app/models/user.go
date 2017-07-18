@@ -4,9 +4,8 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
-type Gene struct {
+type User struct {
 	gorm.Model
 	Id   int
 	Name string
-	Path string
 }

@@ -32,4 +32,6 @@ func InitDB() {
 
 func autoMigrate() {
 	Db.AutoMigrate(&Gene{})
+	Db.AutoMigrate(&User{})
+	Db.AutoMigrate(&Evaluation{})
 }
