@@ -6,7 +6,7 @@ services:
         build: ./
         restart: always
         ports:
-          - 80:9000
+          - 80:1312
         environment:
           - API_DATABASE_URL=db:3306/iga
     db:

@@ -4,8 +4,9 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
-type User struct {
+type Evaluation struct {
 	gorm.Model
-	Id   int
-	Name string
+	Value  int
+	UserId int
+	User   User
 }
