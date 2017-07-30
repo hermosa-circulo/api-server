@@ -1,0 +1,67 @@
+swagger: "2.0"
+info:
+  title: iga-controller API
+  version: 1.0.0
+
+host: localhost
+basePath: /v1
+schemes:
+  - http
+
+paths:
+  /gene:
+    get:
+      summary: Returns a list of Gene
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Gene"
+  /evaluation:
+    post:
+      summary: insert user evaluations
+      parameters:
+      - in: body
+        name: evaluations
+        schema:
+          type: array
+          items:
+            $ref: "#/definitions/Evaluation"
+      responses:
+        200:
+          description: ok
+
+
+definitions:
+  Gene:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      WheelRadius:
+        type: integer
+      Begin:
+        type: integer
+      PointNum:
+        type: integer
+      BreastWide:
+        type: integer
+
+  Evaluation:
+    type: object
+    properties:
+      userId:
+        type: integer
+      geneId:
+        type: integer
+      value:
+        type: integer
+  User:
+    type: object
+    properties:
+      name:
+        type: string

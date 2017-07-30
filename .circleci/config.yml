@@ -1,8 +1,48 @@
 version: 2
 jobs:
-   build:
-     docker:
-       - image: golang:1.8.1
-     steps:
-       - checkout
-       - run: echo "hello world"
+    build:
+        docker:
+        - image: golang:1.8.1
+        steps:
+        - checkout
+        - run: echo "hello world"
+    swagger:
+        docker:
+        - image: jimschubert/swagger-codegen-cli
+        steps:
+        - checkout
+        - run: mkdir -p pages
+        - run: java -jar /swagger-api/swagger-codegen/modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate -i docs/swagger.yml -l html2 -o pages/api
+        - run: mkdir -p /tmp/workspace
+        - run: cp -r pages /tmp/workspace
+        - persist_to_workspace:
+            root: /tmp/workspace
+            paths: pages
+    push:
+        docker:
+        - image: bando/git
+        steps:
+        - checkout
+        - run: git checkout gh-pages
+        - run: rm -rf *
+        - run: rm -rf .circleci .dockerignore .envrc .gitignore
+        - attach_workspace:
+            at: /tmp/workspace
+        - run: cp -r /tmp/workspace/pages/* ./
+        - run: git config --global user.email 'bando142141@gmail.com'
+        - run: git config --global user.name 'circleci'
+        - run: git add .
+        - run: git commit -m 'update'
+        - run: git push git@github.com:hermosa-circulo/iga-controller.git gh-pages -f
+
+
+workflows:
+    version: 2
+    build_and_push:
+        jobs:
+        - build
+        - swagger
+        - push:
+            requires:
+            - build
+            - swagger

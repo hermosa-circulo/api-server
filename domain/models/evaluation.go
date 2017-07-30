@@ -9,4 +9,5 @@ type Evaluation struct {
 	Value  int
 	UserId int
 	User   User
+	Gene   Gene
 }
