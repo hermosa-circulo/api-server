@@ -3,17 +3,32 @@ jobs:
     build:
         docker:
         - image: golang:1.8.1
-        - image: jimschubert/swagger-codegen-cli
-        - image: bando/git
         steps:
         - checkout
         - run: echo "hello world"
+    swagger:
+        docker:
+        - image: jimschubert/swagger-codegen-cli
+        steps:
         - run: mkdir pages
         - run: java -jar /swagger-api/swagger-codegen/modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate -i docs/swagger/swagger.yml -l html2 -o pages/api
-        - run:  git clone -b gh-pages --single-branch git://git@github.com:hermosa-circulo/iga-controller.git tmp
-        - run: "rsync --delete --exclude .git -r pages/* tmp"
-        - run: "cd jenkins_temp; git config --global user.email 'bando142141@gmail.com'"
-        - run: "cd jenkins_temp; git config --global user.name 'circleci'"
-        - run: "cd jenkins_temp; git add ."
-        - run: "cd jenkins_temp; git commit -m 'update'"
-        - run: "cd jenkins_temp; git push git@github.com:hermosa-circulo/iga-controller.git gh-pages -f"
+    push:
+        docker:
+        - image: bando/git
+        steps:
+        - run: git clone -b gh-pages --single-branch git://git@github.com:hermosa-circulo/iga-controller.git tmp
+        - run: rsync --delete --exclude .git -r pages/* tmp
+        - run: cd tmp; git config --global user.email 'bando142141@gmail.com'
+        - run: cd tmp; git config --global user.name 'circleci'
+        - run: cd tmp; git add .
+        - run: cd tmp; git commit -m 'update'
+        - run: cd tmp; git push git@github.com:hermosa-circulo/iga-controller.git gh-pages -f
+
+
+workflows:
+  version: 2
+  build_and_push:
+    jobs:
+      - build
+      - swagger
+      - push
