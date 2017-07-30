@@ -16,13 +16,9 @@ type DBUserRepository struct {
 	db *gorm.DB
 }
 
-func New() *DBUserRepository {
+func NewUserRepository() *DBUserRepository {
 	return &DBUserRepository{
-		users: []*models.User{
-			&models.User{Name: "Hector"},
-			&models.User{Name: "Carlos"},
-			&models.User{Name: "Javi"},
-			&models.User{Name: "Dani"},
+		db: *models.Db
 		},
 	}
 }
@@ -42,7 +38,7 @@ func (r *DBUserRepository) GetUserById(id int) (*models.User, error) {
 }
 
 func (r *DBUserRepository) SaveUser(user *models.User) error {
-	r.users = append(r.users, user)
+	db.Create(&user)
 	return nil
 }
 
@@ -50,7 +46,7 @@ var userRepository *DBUserRepository
 
 func GetUserRepository() (r UserRepository) {
 	if userRepository == nil {
-		userRepository = New()
+		userRepository = NewUserRepository()
 	}
 	return userRepository
 }
