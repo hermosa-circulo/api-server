@@ -1,8 +1,9 @@
 package repository
 
 import (
-	"errors"
 	"iga-controller/app/models"
+
+	"github.com/jinzhu/gorm"
 )
 
 type UserRepository interface {
@@ -12,7 +13,7 @@ type UserRepository interface {
 }
 
 type DBUserRepository struct {
-	users []*models.User
+	db *gorm.DB
 }
 
 func New() *DBUserRepository {
@@ -27,16 +28,17 @@ func New() *DBUserRepository {
 }
 
 func (r *DBUserRepository) GetUsers() []*models.User {
-	return r.users
+	var users []Users
+	db.Find(&users)
+	return users
 }
 
-func (r *DBUserRepository) GetUserById(id string) (*models.User, error) {
-	for _, user := range r.users {
-		if user.Id == id {
-			return user, nil
-		}
-	}
-	return nil, errors.New("user not found")
+func (r *DBUserRepository) GetUserById(id int) (*models.User, error) {
+
+	var user User
+	db.First(&user, id)
+	return user, nil
+	//return nil, errors.New("user not found")
 }
 
 func (r *DBUserRepository) SaveUser(user *models.User) error {
