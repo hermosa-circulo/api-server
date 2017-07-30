@@ -7,6 +7,9 @@ import (
 type Gene struct {
 	gorm.Model
 	Name        string
-	Path        string
 	Evaluations []Evaluation
+	WheelRadius int
+	Begin       int
+	PointNum    int
+	BreastWide  int
 }
