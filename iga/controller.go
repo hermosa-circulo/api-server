@@ -1,9 +1,8 @@
-package main
+package iga
 
 import (
 	"encoding/json"
 	"net/http"
-	"iga-controller/domain/models"
 )
 
 type AppHandler struct{}
@@ -14,15 +13,14 @@ func NewAppHandler() *AppHandler {
 	return &AppHandler{}
 }
 
-func health(w http.ResponseWriter, r *http.Request) {
+func Healthcheck(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Server", "A Go Web Server")
 	w.WriteHeader(200)
 }
 
-func foo(w http.ResponseWriter, r *http.Request) {
-	user := models.User{Name: "Alex", Evaluations: []models.Evaluation{}}
+func Update(w http.ResponseWriter, r *http.Request) {
 
-	js, err := json.Marshal(user)
+	js, err := json.Marshal("")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

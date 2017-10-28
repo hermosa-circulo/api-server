@@ -1,7 +1,10 @@
-.dockerignore
 .envrc
 .gitignore
-Dockerfile
 LICENSE
-api-server
 docker-compose.yml
+.git
+iga-controller
+Makefile
+docs
+.vscode
+.circleci
