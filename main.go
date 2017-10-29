@@ -3,8 +3,11 @@ package main
 import (
 	"fmt"
 	"github.com/hermosa-circulo/iga-controller/iga"
+	"log"
 	"net/http"
 	"os"
+	"reflect"
+	"runtime"
 )
 
 const (
@@ -23,8 +26,13 @@ func main() {
 	port := getEnv("PORT", defaultPort)
 	fmt.Println("starting server with ", port, "...")
 
-	http.HandleFunc("/", iga.Healthcheck)
+	http.HandleFunc("/", iga.Index)
+	http.HandleFunc("/health", iga.Healthcheck)
 	http.HandleFunc("/update", iga.Update)
-	http.ListenAndServe(port, nil)
+	log.Fatal(http.ListenAndServe(port, nil))
 
+}
+
+func getFunctionName(i interface{}) string {
+	return runtime.FuncForPC(reflect.ValueOf(i).Pointer()).Name()
 }

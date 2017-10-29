@@ -6,11 +6,11 @@ type GeneService struct {
 
 func NewGeneService() *GeneService {
 	return &GeneService{
-		GetGeneRepository(),
+		r: GetGeneRepository(),
 	}
 }
 
-func (s *GeneService) GetAllGene() []*Gene {
+func (s *GeneService) GetAllGene() []Gene {
 	return s.r.GetAllGene()
 }
 
@@ -24,7 +24,6 @@ func (s *GeneService) SaveGene(gene *Gene) error {
 
 var s *GeneService
 
-//getter
 func GetGeneService() *GeneService {
 	if s == nil {
 		s = NewGeneService()
