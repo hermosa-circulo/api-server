@@ -1,17 +1,16 @@
-db:
-	docker-compose exec db mysql -uroot -pdocker iga
-start:
-	docker-compose up -d
+default: run
 
 run:
 	go run main.go
+
+start:
+	docker-compose up -d
 
 stop:
 	docker-compose down -v
 
 build:
 	go build
-
 
 docker: docker-build docker-push
 
