@@ -1,7 +1,7 @@
 default: run
 
 run:
-	go run main.go
+	go run main.go controller.go model.go repository.go service.go
 
 start:
 	docker-compose up -d

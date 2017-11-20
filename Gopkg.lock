@@ -20,6 +20,12 @@
   revision = "56be0ebef7bf6090758b8d7d49cdcedd5f5fc597"
 
 [[projects]]
+  name = "github.com/julienschmidt/httprouter"
+  packages = ["."]
+  revision = "8c199fb6259ffc1af525cc3ad52ee60ba8359669"
+  version = "v1.1"
+
+[[projects]]
   branch = "master"
   name = "github.com/ugorji/go"
   packages = ["codec"]
@@ -34,6 +40,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "17eaa8e4acb3b716b54c94aafbd74434d5b08373f86c3a524546edd7d7a7f362"
+  inputs-digest = "61ab982048eb0a2ce33e0181c9c953f4e7bb36b781e1e5773f69b731ae754431"
   solver-name = "gps-cdcl"
   solver-version = 1

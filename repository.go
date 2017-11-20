@@ -1,4 +1,4 @@
-package iga
+package main
 
 import (
 	"context"
@@ -25,7 +25,7 @@ type DBGeneRepository struct {
 
 var etcd client.KeysAPI
 
-func NewGeneRepository() *DBGeneRepository {
+func init() {
 	cfg := client.Config{
 		Endpoints: []string{"http://" + etcdHost + etcdPort},
 		Transport: client.DefaultTransport,
@@ -39,6 +39,19 @@ func NewGeneRepository() *DBGeneRepository {
 
 	o := client.SetOptions{Dir: true}
 	_, err = kAPI.Set(context.Background(), "/"+directory, "", &o)
+}
+
+func NewGeneRepository() *DBGeneRepository {
+	cfg := client.Config{
+		Endpoints: []string{"http://" + etcdHost + etcdPort},
+		Transport: client.DefaultTransport,
+	}
+	c, err := client.New(cfg)
+	kAPI := client.NewKeysAPI(c)
+
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	if err != nil {
 		log.Fatal(err)
