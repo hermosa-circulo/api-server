@@ -1,4 +1,4 @@
-package iga
+package main
 
 import (
 	"encoding/json"
@@ -19,7 +19,6 @@ type Gene struct {
 	BreastWide  int
 }
 
-//mock
 func (g Gene) CalcEvaluation() int {
 	return 1
 }
@@ -45,9 +44,4 @@ func NewGene(str []byte) *Gene {
 
 func NewEvaluation(value int, user string) *Evaluation {
 	return &Evaluation{Value: value, UserName: user}
-}
-
-//mock
-func Merge(gene1 Gene, gene2 Gene) Gene {
-	return gene1
 }

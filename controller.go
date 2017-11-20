@@ -1,17 +1,18 @@
-package iga
+package main
 
 import (
 	"encoding/json"
+	"github.com/julienschmidt/httprouter"
 	"net/http"
 )
 
-func Healthcheck(w http.ResponseWriter, r *http.Request) {
+func Healthcheck(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	w.Header().Set("Server", "A Go Web Server")
 	w.WriteHeader(200)
 	w.Write([]byte("ok"))
 }
 
-func Update(w http.ResponseWriter, r *http.Request) {
+func Update(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 
 	js, err := json.Marshal("")
 
@@ -24,7 +25,7 @@ func Update(w http.ResponseWriter, r *http.Request) {
 	w.Write(js)
 }
 
-func Index(w http.ResponseWriter, r *http.Request) {
+func Index(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 
 	genes := GetGeneService().GetAllGene()
 

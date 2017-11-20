@@ -1,4 +1,4 @@
-package iga
+package main
 
 type GeneService struct {
 	r GeneRepository
