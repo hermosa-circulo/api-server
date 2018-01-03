@@ -4,7 +4,6 @@ LICENSE
 docker-compose.yml
 .git
 iga-controller
-Makefile
 docs
 .vscode
 .circleci

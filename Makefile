@@ -1,7 +1,7 @@
-default: run
+default: proto run
 
 run:
-	go run main.go controller.go model.go repository.go service.go
+	go run cmd/iga-controller/main.go
 
 start:
 	docker-compose up -d
@@ -9,8 +9,14 @@ start:
 stop:
 	docker-compose down -v
 
-build:
-	go build
+build: build-server build-client
+
+build-server:
+	go build -o iga-controller cmd/iga-controller/main.go
+
+build-client:
+	go build -o hctl cmd/hctl/main.go
+	mv hctl ${GOPATH}/bin/
 
 docker: docker-build docker-push
 
@@ -19,3 +25,6 @@ docker-build:
 
 docker-push:
 	docker push hermosa/controller
+
+proto:
+	protoc --go_out=plugins=grpc:. api/iga.proto
